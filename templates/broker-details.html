@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Broker Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .broker-details-container {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Broker Details</h1>
+    <div id="broker-details-container" class="broker-details-container">
+        <!-- Broker detayları burada gösterilecek -->
+    </div>
+    <script>
+        async function fetchBrokerDetails() {
+            // URL'den broker ID'sini al
+            const urlParams = new URLSearchParams(window.location.search);
+            const brokerId = urlParams.get('broker_id');
+
+            try {
+                const response = await fetch(`/broker-details-data?broker_id=${brokerId}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                const container = document.getElementById('broker-details-container');
+
+                container.innerHTML = `
+                    <h2>Broker ${data.broker_id}</h2>
+                    <p><strong>CPU Usage:</strong> ${data.cpu_use || 'N/A'}%</p>
+                    <p><strong>Memory Total:</strong> ${data.memory_total_mb || 'N/A'} MB</p>
+                    <p><strong>Memory Used:</strong> ${data.memory_used_mb || 'N/A'} MB</p>
+                    <p><strong>Memory Usage:</strong> ${data.memory_usage_percent || 'N/A'}%</p>
+                    <p><strong>Disk Usage:</strong> ${data.disk_usage || 'N/A'}%</p>
+                    <p><strong>Network Traffic In:</strong> ${data.network_traffic_in || 'N/A'} MB</p>
+                    <p><strong>Network Traffic Out:</strong> ${data.network_traffic_out || 'N/A'} MB</p>
+                    <p><strong>Broker Status:</strong> ${data.status}</p>
+                `;
+            } catch (error) {
+                console.error('Fetch error:', error);
+                document.getElementById('broker-details-container').innerHTML = 'Broker verileri yüklenemedi.';
+            }
+        }
+
+        fetchBrokerDetails();
+    </script>
+</body>
+</html>

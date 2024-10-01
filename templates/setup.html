@@ -1,0 +1,161 @@
+<!-- templates/setup.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kafka Monitoring Dashboard - Setup</title>
+    <!-- Tabler CSS -->
+    <link href="{{ url_for('static', filename='css/tabler.min.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='css/tabler-flags.min.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='css/tabler-payments.min.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='css/tabler-vendors.min.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='css/demo.min.css') }}" rel="stylesheet"/>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --tblr-font-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+        body {
+            font-feature-settings: "cv03", "cv04", "cv11";
+            font-family: var(--tblr-font-sans-serif);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .page-center {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card-md {
+            max-width: 500px;
+            width: 100%;
+        }
+        .card-body {
+            padding: 2rem;
+        }
+        .hr-text {
+            position: relative;
+            text-align: center;
+            margin: 2rem 0;
+        }
+        .hr-text::before,
+        .hr-text::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background: #dee2e6;
+        }
+        .hr-text::before {
+            left: 0;
+        }
+        .hr-text::after {
+            right: 0;
+        }
+        .hr-text-center {
+            padding: 0 1rem;
+            background: #fff;
+            z-index: 1;
+        }
+        .btn-primary {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+            border-color: #0a58ca;
+        }
+        .footer {
+            font-size: 0.875rem;
+            color: #6c757d;
+            text-align: center;
+            opacity: 0.7;
+            padding: 1rem 0;
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column">
+    <div class="page page-center">
+        <div class="container container-tight py-4">
+            <!-- Logo ve Başlık -->
+            <div class="text-center mb-4">
+                <a href="." class="navbar-brand navbar-brand-autodark">
+                    <img style="width: 128px" src="{{ url_for('static', filename='img/km-logo.png') }}">
+                    <h1>Kafka Monitor</h1>
+                </a>
+            </div>
+            <!-- Kart: İlk Kurulum ve Kullanıcı Oluşturma Formu -->
+            <div class="card card-md">
+                <div class="card-body text-center py-4 p-sm-5">
+                    <h1 class="mt-3">Welcome to Kafka Monitor!</h1>
+                    <p class="text-secondary">Kafka Monitor allows you to efficiently track and manage your Kafka clusters. Get started by creating an admin account below.</p>
+                </div>
+                <div class="hr-text hr-text-center hr-text-spaceless">Create Admin Account</div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('setup') }}">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="confirm_password" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Re-enter your password" required>
+                        </div>
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                                {% for category, message in messages %}
+                                    <div class="alert alert-{{ category }}" role="alert">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Complete Setup</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- Progress Bar ve Butonlar (Opsiyonel, İlk Kurulumda gerekli değilse kaldırılabilir) -->
+            <!--
+            <div class="row align-items-center mt-3">
+                <div class="col-4">
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 25%" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" aria-label="25% Complete">
+                            <span class="visually-hidden">25% Complete</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="btn-list justify-content-end">
+                        <a href="#" class="btn btn-link link-secondary">
+                            Set up later
+                        </a>
+                        <a href="#" class="btn btn-primary">
+                            Continue
+                        </a>
+                    </div>
+                </div>
+            </div>
+            -->
+        </div>
+    </div>
+    <!-- Footer -->
+    <div class="footer">
+        This application has been developed by Open Eclion Software for the community.
+    </div>
+    <!-- Libs JS -->
+    <!-- Tabler Core -->
+    <script src="{{ url_for('static', filename='js/tabler.min.js') }}"></script>
+</body>
+</html>
