@@ -42,6 +42,27 @@ brokers = [
 ]
 
 
+def get_brokers_from_db():
+    """Get brokers from the database."""
+    brokers = []
+    try:
+        conn = mysql.connector.connect(**db_config)
+        cursor = conn.cursor()
+        cursor.execute("SELECT host, port FROM broker")
+        for (host, port) in cursor.fetchall():
+            brokers.append({
+                "broker": f"{host}:{port}",
+                "host": host,
+                "port": port
+            })
+    except mysql.connector.Error as err:
+        print(f"Veritabanı hatası: {err}")
+    finally:
+        if conn:
+            cursor.close()
+            conn.close()
+    return brokers
+
 def get_broker_data(broker):
     """Get monitoring data for a specific broker."""
     admin_client = None
@@ -122,6 +143,7 @@ def get_broker_data(broker):
 
 
 def monitor_kafka():
+    brokers = get_brokers_from_db()  # Fetch the latest brokers from the database
     data = []
     for broker in brokers:
         broker_data = get_broker_data(broker)
