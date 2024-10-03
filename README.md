@@ -6,8 +6,8 @@ The Kafka Monitoring Tool provides real-time tracking of Kafka broker performanc
 #### How to Use
 Clone the repository:
 ```bash
-git clone <repository_url>
-cd kafka-monitoring-tool
+git clone https://github.com/Eclion-Software/KafkaMonitor
+cd KafkaMonitor
 ```
 Install required dependencies:
 ```bash
@@ -32,8 +32,8 @@ Kafka Monitoring Tool, Kafka brokerlarının CPU, bellek, disk kullanımı ve a�
 #### Nasıl Kullanılır
 Projeyi klonlayın:
 ```bash
-git clone <repository_url>
-cd kafka-monitoring-tool
+git clone https://github.com/Eclion-Software/KafkaMonitor
+cd KafkaMonitor
 ```
 Gerekli bağımlılıkları yükleyin:
 ```bash
